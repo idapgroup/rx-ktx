@@ -15,3 +15,16 @@ fun <T> Maybe<T>.io(): Maybe<T> = observeOn(Schedulers.io())
 fun <T> Maybe<T>.computation(): Maybe<T> = observeOn(Schedulers.computation())
 
 fun <T> Maybe<T>.mainThread(): Maybe<T> = observeOn(AndroidSchedulers.mainThread())
+
+@Suppress("NOTHING_TO_INLINE")
+inline fun <T> Maybe<T>.logEvents(tag: Any = ""): Maybe<T> {
+    var startAt: Long = 0
+    return doOnSubscribe {
+        startAt = System.currentTimeMillis()
+        logOnSubscribe(tag)
+    }
+        .doOnSuccess { logOnSuccess(tag, it, startAt) }
+        .doOnComplete { logOnComplete(tag, startAt) }
+        .doOnError { logOnError(tag, it, startAt) }
+        .doOnDispose { logOnDispose(tag, startAt) }
+}

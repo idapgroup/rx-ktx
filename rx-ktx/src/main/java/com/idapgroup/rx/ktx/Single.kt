@@ -15,3 +15,15 @@ fun <T> Single<T>.io(): Single<T> = observeOn(Schedulers.io())
 fun <T> Single<T>.computation(): Single<T> = observeOn(Schedulers.computation())
 
 fun <T> Single<T>.mainThread(): Single<T> = observeOn(AndroidSchedulers.mainThread())
+
+@Suppress("NOTHING_TO_INLINE")
+inline fun <T> Single<T>.logEvents(tag: Any = ""): Single<T> {
+    var startAt: Long = 0
+    return doOnSubscribe {
+        startAt = System.currentTimeMillis()
+        logOnSubscribe(tag)
+    }
+        .doOnSuccess { logOnSuccess(tag, it, startAt) }
+        .doOnError { logOnError(tag, it, startAt) }
+        .doOnDispose { logOnDispose(tag, startAt) }
+}
