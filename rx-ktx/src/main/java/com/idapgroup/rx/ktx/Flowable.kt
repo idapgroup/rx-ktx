@@ -18,7 +18,7 @@ fun <T> Flowable<T>.computation(): Flowable<T> = observeOn(Schedulers.computatio
 fun <T> Flowable<T>.mainThread(): Flowable<T> = observeOn(AndroidSchedulers.mainThread())
 
 @Suppress("NOTHING_TO_INLINE")
-inline fun <T> Flowable<T>.logEvents(tag: Any = ""): Flowable<T> {
+inline fun <T> Flowable<T>.debug(tag: Any = ""): Flowable<T> {
     var startAt: Long = 0
     val calls = AtomicInteger(0)
     return doOnSubscribe {

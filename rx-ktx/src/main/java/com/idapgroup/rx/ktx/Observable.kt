@@ -18,7 +18,7 @@ fun <T> Observable<T>.computation(): Observable<T> = observeOn(Schedulers.comput
 fun <T> Observable<T>.mainThread(): Observable<T> = observeOn(AndroidSchedulers.mainThread())
 
 @Suppress("NOTHING_TO_INLINE")
-inline fun <T> Observable<T>.logEvents(tag: Any = ""): Observable<T> {
+inline fun <T> Observable<T>.debug(tag: Any = ""): Observable<T> {
     var startAt: Long = 0
     val calls = AtomicInteger(0)
     return doOnSubscribe {

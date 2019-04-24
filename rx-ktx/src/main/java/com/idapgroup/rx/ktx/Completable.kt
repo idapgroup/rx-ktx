@@ -17,7 +17,7 @@ fun Completable.computation(): Completable = observeOn(Schedulers.computation())
 fun Completable.mainThread(): Completable = observeOn(AndroidSchedulers.mainThread())
 
 @Suppress("NOTHING_TO_INLINE")
-inline fun Completable.logEvents(tag: Any = ""): Completable {
+inline fun Completable.debug(tag: Any = ""): Completable {
     var startAt: Long = 0
     return doOnSubscribe {
         startAt = System.currentTimeMillis()

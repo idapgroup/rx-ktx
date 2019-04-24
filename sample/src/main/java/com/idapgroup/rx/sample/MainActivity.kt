@@ -4,9 +4,8 @@ import android.annotation.SuppressLint
 import android.os.Bundle
 import android.util.Log
 import androidx.appcompat.app.AppCompatActivity
-import com.idapgroup.rx.ktx.disposeOnPause
+import com.idapgroup.rx.ktx.debug
 import com.idapgroup.rx.ktx.disposeOnStop
-import com.idapgroup.rx.ktx.logEvents
 import io.reactivex.subjects.BehaviorSubject
 import kotlinx.android.synthetic.main.activity_main.*
 import timber.log.Timber
@@ -19,6 +18,8 @@ class MainActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
+
+        Timber.plant(Timber.DebugTree())
 
         Timber.plant(object : Timber.Tree() {
 
@@ -51,7 +52,7 @@ class MainActivity : AppCompatActivity() {
         Timber.d("-----------------------------------------------------")
 
         val subject = BehaviorSubject.createDefault(1)
-        subject.logEvents("MyTag")
+        subject.debug("MyTag")
             .subscribe({}, {})
             .disposeOnStop(this)
 
@@ -64,5 +65,7 @@ class MainActivity : AppCompatActivity() {
         }
 
         withError = !withError
+//
+
     }
 }

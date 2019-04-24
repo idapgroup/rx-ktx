@@ -17,7 +17,7 @@ fun <T> Maybe<T>.computation(): Maybe<T> = observeOn(Schedulers.computation())
 fun <T> Maybe<T>.mainThread(): Maybe<T> = observeOn(AndroidSchedulers.mainThread())
 
 @Suppress("NOTHING_TO_INLINE")
-inline fun <T> Maybe<T>.logEvents(tag: Any = ""): Maybe<T> {
+inline fun <T> Maybe<T>.debug(tag: Any = ""): Maybe<T> {
     var startAt: Long = 0
     return doOnSubscribe {
         startAt = System.currentTimeMillis()

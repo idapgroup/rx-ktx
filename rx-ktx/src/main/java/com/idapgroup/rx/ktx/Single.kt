@@ -17,7 +17,7 @@ fun <T> Single<T>.computation(): Single<T> = observeOn(Schedulers.computation())
 fun <T> Single<T>.mainThread(): Single<T> = observeOn(AndroidSchedulers.mainThread())
 
 @Suppress("NOTHING_TO_INLINE")
-inline fun <T> Single<T>.logEvents(tag: Any = ""): Single<T> {
+inline fun <T> Single<T>.debug(tag: Any = ""): Single<T> {
     var startAt: Long = 0
     return doOnSubscribe {
         startAt = System.currentTimeMillis()
