@@ -1,11 +1,11 @@
 ReactiveX Kotlin Extensions
 ============
 
-Kotlin extensions for convenient using rx library.
+Kotlin extensions for convenient usage of Rx library.
 
 Download
 --------
-[ ![Download](https://api.bintray.com/packages/idapgroup/kotlin/lifecycle-ktx/images/download.svg?version=1.0.0) ](https://bintray.com/idapgroup/kotlin/lifecycle-ktx/1.0.0/link)
+[ ![Download](https://api.bintray.com/packages/idapgroup/kotlin/rx-ktx/images/download.svg?version=1.0.0) ](https://bintray.com/idapgroup/kotlin/rx-ktx/1.0.0/link)
 
 Add repository to your root `build.gradle`
 
@@ -25,17 +25,17 @@ Extensions
 -------------
 Each Rx type(Observable, Single, Completable, Maybe, Flowable) has these extensions:
 
-* Subscribe On:
-**subscribeIo()** -> subscribeOn(Schedulers.io())
-**subscribeComputation()** -> subscribeOn(Schedulers.computation())
-**subscribeMainThread()** -> subscribeOn(AndroidSchedulers.mainThread())
+   * Subscribe On:
+        * **subscribeIo()** -> subscribeOn(Schedulers.io())
+        * **subscribeComputation()** -> subscribeOn(Schedulers.computation())
+        * **subscribeMainThread()** -> subscribeOn(AndroidSchedulers.mainThread())
 
-* Observe On: 
-**io()** -> observeOn(Schedulers.io())
-**computation()** -> observeOn(Schedulers.computation())
-**mainThread()** -> observeOn(AndroidSchedulers.mainThread())
+   * Observe On: 
+        * **io()** -> observeOn(Schedulers.io())
+        * **computation()** -> observeOn(Schedulers.computation())
+        * **mainThread()** -> observeOn(AndroidSchedulers.mainThread())
 
-* Logging all rx events (such as onSubscribe, onError etc.) for debug mode based on [Timber][1] logs:
+   * Logging all rx events (such as onSubscribe, onError etc.) for debug mode based on [Timber][1] logs:
 
 ```kotlin
     Observable.just(1)
@@ -43,14 +43,16 @@ Each Rx type(Observable, Single, Completable, Maybe, Flowable) has these extensi
         .subscribe()
 ```
 
-Logs:
+   Logs:
+        
 ~~~
 .onSubscribe() thread: main
  [1]-> value: 1, passed time: 3 ms, thread: main
 .onComplete() passed time: 5 ms, thread: main
 ~~~
-
-Each OnNext() event has counter that helps to track execution steps.
+    
+   Each OnNext() event has counter that helps to track execution steps.
+   
 ~~~
  [1]-> ...
  [2]-> ...
@@ -58,7 +60,7 @@ Each OnNext() event has counter that helps to track execution steps.
  ...
 ~~~
 
-* disposeOn(LifecycleOwner, Lifecycle.Event) method that helps auto control of your disposable by LifecycleOwner lifecycle.
+   * disposeOn(LifecycleOwner, Lifecycle.Event) method that helps auto control of your disposable by LifecycleOwner lifecycle.
 
 ```kotlin
 class ExampleActivity: AppCompatActivity() {
@@ -68,23 +70,26 @@ class ExampleActivity: AppCompatActivity() {
             .subscribe()
             .disposeOn(this, Lifecycle.Event.ON_DESTROY)
     }
-        
+
 }
 ```
+    
+   For more convenience added all lifecycle events methods:
 
-For more convenience added all lifecycle events methods:
+~~~
+ disposeOnPause(LifecycleOwner)
+ disposeOnStop(LifecycleOwner)
+ disposeOnDestroy(LifecycleOwner)
+~~~
 
-**disposeOnPause(LifecycleOwner)**
-**disposeOnStop(LifecycleOwner)**
-**disposeOnDestroy(LifecycleOwner)**
-
-* Top level functions for converting com.google.android.gms.tasks.Task to rx type: 
+   * Top level functions for converting com.google.android.gms.tasks.Task to rx type: 
+   
 ```kotlin    
-    completableOf { task }
-    singleOf { task }
-    maybeOf { task }
+  completableOf { task() }
+  singleOf { task() }
+  maybeOf { task() }
 ```
-
+    
 AutoDisposable
 ------------
 
