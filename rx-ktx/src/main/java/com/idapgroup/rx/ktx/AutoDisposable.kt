@@ -5,21 +5,21 @@ import io.reactivex.disposables.Disposable
 import io.reactivex.internal.disposables.DisposableContainer
 
 interface AutoDisposable :  DisposableContainer {
-    val disposable: CompositeDisposable
 
-    fun Disposable.autoDispose() : Disposable {
-        disposable.add(this)
-        return this
-    }
+    fun Disposable.autoDispose() : Disposable
 
     fun cancel()
     fun dispose()
-
 }
 
 class AutoDisposableImpl : AutoDisposable {
 
-    override val disposable = CompositeDisposable()
+    private val disposable = CompositeDisposable()
+
+    override fun Disposable.autoDispose() : Disposable {
+        disposable.add(this)
+        return this
+    }
 
     override fun dispose() {
         disposable.dispose()

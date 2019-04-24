@@ -18,6 +18,7 @@ class RxViewModelTest {
 }
 
 class TestRxViewModel : RxViewModel() {
+
     val testDisposable =
         Observable.never<Int>()
             .subscribe()
