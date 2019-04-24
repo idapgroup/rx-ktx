@@ -2,23 +2,22 @@ apply plugin: 'com.github.dcendents.android-maven'
 apply plugin: 'com.jfrog.bintray'
 
 ext {
-    bintrayRepo = 'kotlin'
-    bintrayName = 'rx-ktx'
-
-    publishedGroupId = 'com.idapgroup'
     libraryName = 'rx-ktx'
-    artifact = 'rx-ktx'
+    publishedGroupId = 'com.idapgroup'
+    artifact = libraryName
+
+    bintrayRepo = 'kotlin'
+    bintrayName = libraryName
+    bintrayUserOrg = 'idapgroup'
 
     libraryDescription = 'Some Kotlin extensions and support classes for ReactiveX'
-
-    siteUrl = 'https://github.com/idapgroup/lifecycle-ktx'
-    gitUrl = 'https://github.com/idapgroup/lifecycle-ktx.git'
-
     libraryVersion = '1.0.0'
 
+    siteUrl = "https://github.com/idapgroup/$libraryName"
+    gitUrl = "${siteUrl}.git"
 
     licenseName = 'BSD 3-Clause License'
-    licenseUrl = 'https://github.com/idapgroup/ArgumentDelegate/blob/master/LICENSE'
+    licenseUrl = "$siteUrl/blob/master/LICENSE"
     allLicenses = ["BSD 3-Clause"]
 
 }
@@ -71,7 +70,7 @@ bintray {
     configurations = ['archives']
     pkg {
         repo = bintrayRepo
-        userOrg = 'idapgroup'
+        userOrg = bintrayUserOrg
         name = bintrayName
         desc = libraryDescription
         websiteUrl = siteUrl
