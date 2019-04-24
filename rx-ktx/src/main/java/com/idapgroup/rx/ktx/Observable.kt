@@ -5,7 +5,6 @@ import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.schedulers.Schedulers
 import java.util.concurrent.atomic.AtomicInteger
 
-
 fun <T> Observable<T>.subscribeIo(): Observable<T> = subscribeOn(Schedulers.io())
 
 fun <T> Observable<T>.subscribeComputation(): Observable<T> = subscribeOn(Schedulers.computation())

@@ -5,27 +5,22 @@ import io.reactivex.Completable
 import io.reactivex.Maybe
 import io.reactivex.Single
 
-private const val TAG = "FirebaseExt"
-@Suppress("SimplifyBooleanWithConstants")
-private val DEBUG = true && BuildConfig.DEBUG
-
-
-fun <R> completableOf(task: () -> Task<R>): Completable {
-    return maybeOf(task).ignoreElement()
+fun <R> completableOf(newTask: () -> Task<R>): Completable {
+    return maybeOf(newTask).ignoreElement()
 }
 
-fun <R> singleOf(task: () -> Task<R>): Single<R> {
-    return maybeOf(task).toSingle()
+fun <R> singleOf(newTask: () -> Task<R>): Single<R> {
+    return maybeOf(newTask).toSingle()
 }
 
-fun <R> maybeOf(task: () -> Task<R>): Maybe<R> {
+fun <R> maybeOf(newTask: () -> Task<R>): Maybe<R> {
     return Maybe.create { emitter ->
-        task().addOnCompleteListener {
+        newTask().addOnCompleteListener {
             if (it.isSuccessful) {
-                if(it.result == null) {
-                    emitter.onComplete()
-                } else {
+                if(it.result != null) {
                     emitter.onSuccess(it.result!!)
+                } else {
+                    emitter.onComplete()
                 }
             } else {
                 emitter.onError(it.exception!!)
